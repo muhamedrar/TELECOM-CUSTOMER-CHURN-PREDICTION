@@ -1,42 +1,49 @@
 # Telco Customer Churn Prediction
 
-## Overview
-This project focuses on predicting customer churn for a telecommunications company using machine learning models. Churn is a critical metric for identifying customers likely to stop using the service. The dataset includes demographic and service-related information about customers. The goal is to classify whether a customer will churn or not based on their attributes.
+This project analyzes customer churn using data from a telecommunications company. The primary goal is to predict customer churn based on various features related to customer demographics, account information, and services used. The dataset is imbalanced, and feature engineering was applied to improve the model's performance.
 
-## Dataset
-The dataset contains customer information such as:
-- Demographic information (gender, age, etc.)
-- Service subscription details (Phone, Internet, etc.)
-- Account and billing information (Monthly charges, Contract type, Payment method, etc.)
+## Dataset Overview
 
-### Features:
-- **Categorical Variables**: 
-  - Gender, Partner, Dependents, PhoneService, MultipleLines, InternetService, OnlineSecurity, TechSupport, StreamingTV, StreamingMovies, Contract, PaymentMethod, etc.
-- **Numerical Variables**: 
-  - Tenure, MonthlyCharges, TotalCharges.
+The dataset includes various features such as:
+- **Demographics**: Gender, SeniorCitizen, Partner, Dependents.
+- **Services**: PhoneService, MultipleLines, InternetService, OnlineSecurity, OnlineBackup, TechSupport, StreamingTV, StreamingMovies.
+- **Account Info**: Contract, PaperlessBilling, PaymentMethod, MonthlyCharges, TotalCharges, tenure.
+- **Target**: Churn (Yes/No).
 
-## Data Preprocessing
-1. Handled missing values.
-2. Converted categorical variables to numerical using one-hot encoding.
-3. Scaled the numerical features using standardization.
+## Key Steps
 
-## Model Building
-Three models were trained and evaluated:
-1. **Logistic Regression**
-2. **Decision Tree Classifier**
-3. **Random Forest Classifier**
+### 1. Data Preprocessing
+- **Handling Missing Values**: Missing values were identified and filled.
+- **Categorical Encoding**: Converted categorical features using label encoding.
+- **Feature Scaling**: Standardized numerical features using `StandardScaler`.
 
-## Performance Comparison
+### 2. Feature Engineering
+- **Tenure Grouping**: Customers were grouped based on their tenure to create the `TenureGroup` feature.
+- **Phone and Internet Bundling**: A combined feature `HasPhoneAndInternet` was created to capture whether customers subscribed to both services.
+- **Imbalanced Data Handling**: Applied **SMOTE** (Synthetic Minority Over-sampling Technique) to handle the class imbalance in the target variable (Churn).
 
-| Model                      | Accuracy  | Precision (Churn) | Recall (Churn) | F1-Score (Churn) |
-|-----------------------------|-----------|-------------------|----------------|------------------|
-| Logistic Regression          | 85.31%    | 0.85              | 0.84           | 0.85             |
-| Decision Tree Classifier     | 81.08%    | 0.88              | 0.81           | 0.84             |
-| Random Forest Classifier     | 86.20%    | 0.88              | 0.87           | 0.88             |
+### 3. Modeling
+The following models were used for classification:
+- **Logistic Regression**
+- **Decision Tree Classifier**
+- **Random Forest Classifier**
 
-- **Logistic Regression**: Achieved a balanced performance with an accuracy of 85.31%.
-- **Decision Tree Classifier**: Lower accuracy (81.08%) with slightly reduced recall and F1-scores compared to other models.
-- **Random Forest Classifier**: Performed best with an accuracy of 86.20%, showing higher precision and recall for both classes.
+### 4. Performance Comparison
 
-## Conclusion
-Random Forest provided the best performance in predicting customer churn, with the highest accuracy and balanced metrics. Future improvements could include hyperparameter tuning and experimenting with other ensemble models.
+| Model                  | Accuracy | Precision (0) | Recall (0) | F1-Score (0) | Precision (1) | Recall (1) | F1-Score (1) |
+|------------------------|----------|---------------|------------|--------------|---------------|------------|--------------|
+| Logistic Regression     | 85.30%   | 0.86          | 0.87       | 0.86         | 0.85          | 0.84       | 0.85         |
+| Decision Tree Classifier| 81.08%   | 0.82          | 0.81       | 0.82         | 0.88          | 0.81       | 0.84         |
+| Random Forest Classifier| 86.20%   | 0.88          | 0.86       | 0.87         | 0.85          | 0.87       | 0.86         |
+
+### 5. Visualization
+Key visualizations include churn distribution across categorical features like gender, contract type, internet service, and others.
+
+### Conclusion
+- **Logistic Regression** and **Random Forest** performed well, with **Random Forest** showing the highest accuracy at **86.20%**.
+- **SMOTE** was effective in addressing the imbalanced data problem, leading to more reliable model evaluation.
+
+## How to Run the Code
+1. Clone the repository.
+   ```bash
+   git clone https://github.com/your-repo-url.git
